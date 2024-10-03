@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+    smart_attendance_go:
+        container_name: smart_attendance_go
+        build: ./golang
+        tty: true
+        ports:
+            - "8080:8080"
+        env_file:
+            - ./mysql/.env
+        depends_on:
+            - smart_attendance_db
+        volumes:
+            - ./golang/app:/go/src/app
+        networks:
+            - smart_attendance_network
+
+    smart_attendance_db:
+        container_name: smart_attendance_db
+        build: ./mysql
+        tty: true
+        platform: linux/x86_64
+        ports:
+            - 3306:3306
+        env_file:
+            - ./mysql/.env
+        volumes:
+            - mysql_smart_attendance_volume:/var/lib/mysql
+            - ./mysql/initdb:/docker-entrypoint-initdb.d
+        networks:
+            - smart_attendance_network
+
+volumes:
+    mysql_smart_attendance_volume:
+        name: mysql_smart_attendance_volume
+
+networks:
+    smart_attendance_network:
+        external: true
