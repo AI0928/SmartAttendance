@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS nfctags;
+
+CREATE TABLE nfctags (
+  `id` VARCHAR(255) NOT NULL,
+  `class_id` VARCHAR(255) NOT NULL,
+  `times` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);
